@@ -213,6 +213,12 @@
             </extensions>
         </graph>
         <graph>
+            <graph-enabled>true</graph-enabled>
+            <graph-name>cbsample</graph-name>
+            <graph-type>com.couchbase.graph.rexter.CouchbaseGraphConfiguration</graph-type>
+            <graph-location>/tmp/cb-graph</graph-location>
+        </graph>
+        <graph>
             <graph-enabled>false</graph-enabled>
             <graph-name>remotetinkergraph</graph-name>
             <graph-type>rexstergraph</graph-type>

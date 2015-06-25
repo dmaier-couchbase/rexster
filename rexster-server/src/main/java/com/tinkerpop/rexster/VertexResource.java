@@ -139,11 +139,12 @@ public class VertexResource extends AbstractSubResource {
 
         } catch (JSONException ex) {
             logger.error(ex);
+            ex.printStackTrace();
             JSONObject error = generateErrorObjectJsonFail(ex);
             throw new WebApplicationException(Response.status(Status.INTERNAL_SERVER_ERROR).entity(error).build());
         } catch (Exception re) {
             logger.error(re);
-
+            re.printStackTrace();
             JSONObject error = generateErrorObject(re.getMessage(), re);
             throw new WebApplicationException(Response.status(Status.INTERNAL_SERVER_ERROR).entity(error).build());
         } finally {
@@ -218,7 +219,7 @@ public class VertexResource extends AbstractSubResource {
 
         } catch (JSONException ex) {
             logger.error(ex);
-
+            ex.printStackTrace();
             final JSONObject error = generateErrorObjectJsonFail(ex);
             throw new WebApplicationException(Response.status(Status.INTERNAL_SERVER_ERROR).entity(error).build());
         } finally {
@@ -333,6 +334,8 @@ public class VertexResource extends AbstractSubResource {
 
         final Vertex vertex = this.getRexsterApplicationGraph(graphName).getGraph().getVertex(id);
 
+        logger.info("v = " + vertex.toString());
+        
         ExtensionResponse extResponse;
         ExtensionMethod methodToCall;
         final ExtensionSegmentSet extensionSegmentSet = parseUriForExtensionSegment(graphName, ExtensionPoint.VERTEX);
@@ -390,6 +393,9 @@ public class VertexResource extends AbstractSubResource {
             } catch (WebApplicationException wae) {
                 // already logged this...just throw it  up.
                 rag.tryRollback();
+                
+                wae.printStackTrace();
+                
                 throw wae;
             } catch (Exception ex) {
                 logger.error("Dynamic invocation of the [" + extensionSegmentSet + "] extension failed.", ex);
@@ -482,6 +488,9 @@ public class VertexResource extends AbstractSubResource {
 
         try {
             final Vertex vertex = rag.getGraph().getVertex(vertexId);
+            
+            logger.info("v = " + vertex.toString());
+            
             if (vertex == null) {
                 final String msg = "Vertex with [" + vertexId + "] cannot be found.";
                 logger.info(msg);
@@ -569,6 +578,8 @@ public class VertexResource extends AbstractSubResource {
         } catch (JSONException ex) {
             logger.error(ex);
 
+            ex.printStackTrace();
+            
             final JSONObject error = generateErrorObjectJsonFail(ex);
             throw new WebApplicationException(Response.status(Status.INTERNAL_SERVER_ERROR).entity(error).build());
         } catch (WebApplicationException wae) {
@@ -576,6 +587,8 @@ public class VertexResource extends AbstractSubResource {
         } catch (Exception re) {
             logger.error(re);
 
+            re.printStackTrace();
+            
             final JSONObject error = generateErrorObject(re.getMessage(), re);
             throw new WebApplicationException(Response.status(Status.INTERNAL_SERVER_ERROR).entity(error).build());
         } finally {
@@ -730,12 +743,12 @@ public class VertexResource extends AbstractSubResource {
             rag.tryRollback();
 
             logger.error(ex);
-
+            ex.printStackTrace();
             JSONObject error = generateErrorObjectJsonFail(ex);
             throw new WebApplicationException(Response.status(Status.INTERNAL_SERVER_ERROR).entity(error).build());
         } catch (Exception re) {
             rag.tryRollback();
-
+            re.printStackTrace();
             logger.error(re);
 
             JSONObject error = generateErrorObject(re.getMessage(), re);
@@ -848,6 +861,7 @@ public class VertexResource extends AbstractSubResource {
             rag.tryRollback();
 
             logger.error(ex);
+            ex.printStackTrace();
 
             JSONObject error = generateErrorObjectJsonFail(ex);
             throw new WebApplicationException(Response.status(Status.INTERNAL_SERVER_ERROR).entity(error).build());
@@ -855,7 +869,8 @@ public class VertexResource extends AbstractSubResource {
             rag.tryRollback();
 
             logger.error(re);
-
+            re.printStackTrace();
+            
             JSONObject error = generateErrorObject(re.getMessage(), re);
             throw new WebApplicationException(Response.status(Status.INTERNAL_SERVER_ERROR).entity(error).build());
         }
@@ -908,6 +923,7 @@ public class VertexResource extends AbstractSubResource {
             rag.tryRollback();
 
             logger.error(ex);
+            ex.printStackTrace();
 
             final JSONObject error = generateErrorObjectJsonFail(ex);
             throw new WebApplicationException(Response.status(Status.INTERNAL_SERVER_ERROR).entity(error).build());
@@ -916,6 +932,7 @@ public class VertexResource extends AbstractSubResource {
             rag.tryRollback();
 
             logger.error(re);
+            re.printStackTrace();
 
             final JSONObject error = generateErrorObject(re.getMessage(), re);
             throw new WebApplicationException(Response.status(Status.INTERNAL_SERVER_ERROR).entity(error).build());
